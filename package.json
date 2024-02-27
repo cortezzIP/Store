@@ -1,0 +1,19 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cortezzIP/Store.git"
+  },
+  "author": "MUTANT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cortezzIP/Store/issues"
+  },
+  "homepage": "https://github.com/cortezzIP/Store#readme"
+}
