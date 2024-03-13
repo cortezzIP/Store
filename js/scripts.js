@@ -1,58 +1,268 @@
-const { contractData } = require('contractData.js');
-
 function changePage() {
     const roleId = document.getElementById('roleId').value;
-    switch(roleId) {
+    switch (roleId) {
         case '1':
-            location.href='pages/admin.html';
+            location.href = 'pages/admin.html';
             break;
         case '2':
-            location.href='pages/supplier.html';
+            location.href = 'pages/supplier.html';
             break;
         case '3':
-            location.href='pages/buyer.html';
+            location.href = 'pages/buyer.html';
             break;
         case '4':
-            location.href='pages/seller.html';
+            location.href = 'pages/seller.html';
             break;
         case '5':
-            location.href='pages/store.html';
+            location.href = 'pages/store.html';
             break;
     }
 }
 
 const web3 = new Web3('http://localhost:7545');
 
-const store = new web3.eth.Contract(contractData.abi, contractData.contractAddress);
+const contractAddress = '0xc96B515beb953605201C090da3F155f71c93A1Cc';
+const abi = [{
+        "constant": true,
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "products",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "supplier",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "store",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "stores",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "name": "suppliers",
+        "outputs": [{
+                "internalType": "address",
+                "name": "addr",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "rating",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "name": "users",
+        "outputs": [{
+            "internalType": "enum CStore.Roles",
+            "name": "",
+            "type": "uint8"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_price",
+                "type": "uint256"
+            }
+        ],
+        "name": "createProduct",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "_productId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_store",
+                "type": "address"
+            }
+        ],
+        "name": "shipProduct",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "_productId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_buyer",
+                "type": "address"
+            }
+        ],
+        "name": "sellProduct",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "_productId",
+            "type": "uint256"
+        }],
+        "name": "returnProduct",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+                "internalType": "address",
+                "name": "_addr",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_rating",
+                "type": "uint256"
+            }
+        ],
+        "name": "addSupplier",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{
+                "internalType": "address",
+                "name": "_addr",
+                "type": "address"
+            },
+            {
+                "internalType": "enum CStore.Roles",
+                "name": "_role",
+                "type": "uint8"
+            }
+        ],
+        "name": "updateRole",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+];
+
+
+const store = new web3.eth.Contract(abi, contractAddress);
+
 web3.eth.defaultAccount = '0x09db776c7B23bcDD4f165a8c1b29197cAAFB688b';
-console.log(web3.eth.accounts);
 
 async function createProduct() {
     const productId = document.getElementById('productId').value;
     const productName = document.getElementById('productName').value;
     const productPrice = document.getElementById('productPrice').value;
-    await store.methods.createProduct(productId, productName, productPrice).send({from: web3.eth.defaultAccount});
+    await store.methods.createProduct(productId, productName, productPrice).send({ from: web3.eth.defaultAccount });
 }
 
 async function shipProduct() {
     const productId = document.getElementById('shipProductId').value;
     const storeAddress = document.getElementById('shipStoreAddress').value;
-    await store.methods.shipProduct(productId, storeAddress).send({from: web3.eth.defaultAccount});
+    await store.methods.shipProduct(productId, storeAddress).send({ from: web3.eth.defaultAccount });
 }
 
 async function sellProduct() {
     const productId = document.getElementById('sellProductId').value;
     const buyerAddress = document.getElementById('sellBuyerAddress').value;
-    await store.methods.sellProduct(productId, buyerAddress).send({from: web3.eth.defaultAccount});
+    await store.methods.sellProduct(productId, buyerAddress).send({ from: web3.eth.defaultAccount });
 }
 
 async function returnProduct() {
     const productId = document.getElementById('returnProductId').value;
-    await store.methods.returnProduct(productId).send({from: web3.eth.defaultAccount});
+    await store.methods.returnProduct(productId).send({ from: web3.eth.defaultAccount });
 }
 
 async function addSupplier() {
     const supplierAddress = document.getElementById('supplierAddress').value;
     const supplierRating = document.getElementById('supplierRating').value;
-    await store.methods.addSupplier(supplierAddress, supplierRating).send({from: web3.eth.defaultAccount});
+    await store.methods.addSupplier(supplierAddress, supplierRating).send({ from: web3.eth.defaultAccount });
 }
