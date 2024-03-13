@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Store Interface</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png" />
+    <link href="css/style.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
-    <script src="js/scripts.js"></script>
-</head>
+    <script type="module" src="js/scripts.js"></script>
+  </head>
 
-<body>
-    <div class="w-full max-w-md px-4 mx-auto my-auto space-y-8 sm:px-6 md:px-8">
-        <div class="flex flex-col space-y-4">
-            <h2>Create Product</h2>
-            <input id="productId" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Product ID">
-            <input id="productName" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="text" placeholder="Product Name">
-            <input id="productPrice" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Product Price">
-            <button onclick="createProduct()" class="inline-flex items-center justify-center px-4 font-semibold tracking-tight text-white transition rounded-lg shadow font-brand bg-cyan-500 h-9 hover:bg-cyan-400 focus:bg-cyan-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-cyan-600 focus:ring-2 focus:ring-white focus:ring-inset">Create</button>
+  <body>
+    <div>
+      <h2>Create Product</h2>
+      <input id="productId" type="number" placeholder="Product ID" />
+      <input id="productName" type="text" placeholder="Product Name" />
+      <input id="productPrice" type="number" placeholder="Product Price" />
+      <button onclick="createProduct()">Create</button>
 
-            <h2>Add Supplier</h2>
-            <input id="supplierAddress" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="text" placeholder="Supplier Address">
-            <input id="supplierRating" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Supplier Rating">
-            <button onclick="addSupplier()" class="inline-flex items-center justify-center px-4 font-semibold tracking-tight text-white transition rounded-lg shadow font-brand bg-cyan-500 h-9 hover:bg-cyan-400 focus:bg-cyan-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-cyan-600 focus:ring-2 focus:ring-white focus:ring-inset">Add Supplier</button>
+      <h2>Add Supplier</h2>
+      <input id="supplierAddress" type="text" placeholder="Supplier Address" />
+      <input id="supplierRating" type="number" placeholder="Supplier Rating" />
+      <button onclick="addSupplier()">Add Supplier</button>
 
-            <h2>Ship Product</h2>
-            <input id="shipProductId" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Product ID">
-            <input id="shipStoreAddress" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="text" placeholder="Store Address">
-            <button onclick="shipProduct()" class="inline-flex items-center justify-center px-4 font-semibold tracking-tight text-white transition rounded-lg shadow font-brand bg-cyan-500 h-9 hover:bg-cyan-400 focus:bg-cyan-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-cyan-600 focus:ring-2 focus:ring-white focus:ring-inset">Ship</button>
+      <h2>Ship Product</h2>
+      <input id="shipProductId" type="number" placeholder="Product ID" />
+      <input id="shipStoreAddress" type="text" placeholder="Store Address" />
+      <button onclick="shipProduct()">Ship</button>
 
-            <h2>Sell Product</h2>
-            <input id="sellProductId" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Product ID">
-            <input id="sellBuyerAddress" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="text" placeholder="Buyer Address">
-            <button onclick="sellProduct()" class="inline-flex items-center justify-center px-4 font-semibold tracking-tight text-white transition rounded-lg shadow font-brand bg-cyan-500 h-9 hover:bg-cyan-400 focus:bg-cyan-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-cyan-600 focus:ring-2 focus:ring-white focus:ring-inset">Sell</button>
+      <h2>Sell Product</h2>
+      <input id="sellProductId" type="number" placeholder="Product ID" />
+      <input id="sellBuyerAddress" type="text" placeholder="Buyer Address" />
+      <button onclick="sellProduct()">Sell</button>
 
-            <h2>Return Product</h2>
-            <input id="returnProductId" class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-cyan-500 focus:border-cyan-500" type="number" placeholder="Product ID">
-            <button onclick="returnProduct()" class="inline-flex items-center justify-center px-4 font-semibold tracking-tight text-white transition rounded-lg shadow font-brand bg-cyan-500 h-9 hover:bg-cyan-400 focus:bg-cyan-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-cyan-600 focus:ring-2 focus:ring-white focus:ring-inset">Return</button>
-        </div>
+      <h2>Return Product</h2>
+      <input id="returnProductId" type="number" placeholder="Product ID" />
+      <button onclick="returnProduct()">Return</button>
     </div>
-</body>
-
+  </body>
 </html>
