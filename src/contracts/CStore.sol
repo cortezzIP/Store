@@ -48,6 +48,7 @@ contract CStore {
     // }
 
     function shipProduct(uint _productId, address _store) public {
+        require(products[_productId].id != 0, "Продукта не существет!");
         require(products[_productId].supplier == msg.sender, "Вы не являетесь поставщиком!");
         products[_productId].store = _store;
     }
