@@ -231,3 +231,6 @@ const abi = [
     type: "function",
   },
 ];
+
+// exports.contractAddress = contractAddress;
+// exports.abi = abi;

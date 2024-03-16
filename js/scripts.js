@@ -1,4 +1,9 @@
 import * as contractData from "../js/contractData.js";
+const fs = require("fs");
+//let reader = new FileReader();
+
+let file = fs.readFileSync("../src/build/contracts/CStore.json");
+//let storeBuild = JSON.parse("../src/build/contracts/CStore.json");
 
 function changePage() {
   const roleId = document.getElementById("roleId").value;
@@ -23,10 +28,7 @@ function changePage() {
 
 const web3 = new Web3("http://localhost:7545");
 
-const store = new web3.eth.Contract(
-  contractData.abi,
-  contractData.contractData
-);
+const store = new web3.eth.Contract(file.abi, contractData.contractData);
 
 web3.eth.defaultAccount = "0x5a8d743941876FAcfC3d16fDddC54519Ab05F7c5";
 

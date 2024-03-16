@@ -14,8 +14,14 @@ contract CStore {
         uint id;
         string name;
         address supplier;
-        address store;
         uint price;
+        uint numberOfProducts;
+    }
+
+    struct Purchase {
+        address buyer;
+        uint productId;
+        uint numberOfProducts;
     }
 
     struct Supplier {
@@ -24,51 +30,49 @@ contract CStore {
         uint[] productIds;
     }
 
-    struct Store {
-        uint id;
-        mapping (uint => uint) numberOfProducts;
-    }
-
-    mapping (uint => Store) public stores;
     mapping (address => Roles) public users;
-    mapping (uint => Product) public products;
     mapping (address => Supplier) public suppliers;
+    mapping (uint => Product) public products;
+    mapping (uint => Purchase) public purchases;
 
+    // +
     function createProduct(uint _id, string memory _name, uint _price) public {
-        require(bytes(_name).length > 0, "Имя введено некорректно!");
-        require(_price > 0, "Цена введена некорректно!");
-        require(products[_id].id != _id, "Продукт с таким ID уже существует!");
-        require(msg.sender == suppliers[msg.sender].addr, "Вы не являетесь поставщиком!");
-        products[_id] = Product(_id, _name, msg.sender, address(0), _price);
+        require(bytes(_name).length > 0, "The name was entered incorrectly!");
+        require(_price > 0, "The price was entered incorrectly!");
+        require(products[_id].id != _id, "A product with this ID already exists!");
+        require(msg.sender == suppliers[msg.sender].addr, "You are not a supplier!");
+        products[_id] = Product(_id, _name, msg.sender, _price, 0);
     }
 
-    // function createStore(uint _id) public {
-    //     require(stores[_id].id != _id, "Магазин с таким ID уже существует!");
-    //     stores[_id] = Store(_id, );
-    // }
-
-    function shipProduct(uint _productId, address _store) public {
-        require(products[_productId].id != 0, "Продукта не существет!");
-        require(products[_productId].supplier == msg.sender, "Вы не являетесь поставщиком!");
-        products[_productId].store = _store;
-    }
-
-    function sellProduct(uint _productId, address _buyer) public {
-        // require(products[_productId].count - numberOfProducts > 0, "Товара не достаточно!");
-        require(products[_productId].store == msg.sender, "Вы не являетесь владельцем товара!");
-        products[_productId].store = _buyer;
-        // products[_productId].count = products[_productId].count - numberOfProducts;
-    }
-
-    function returnProduct(uint _productId) public {
-        require(products[_productId].store == msg.sender, "Вы не являетесь владельцем товара!");
-        products[_productId].store = products[_productId].supplier;
-        // products[_productId].count = products[_productId].count + ;
-    }
-
-    function addSupplier(address _addr, uint _rating) public {
+    // +
+    function addSupplier(address _addr, int _rating) public {
+        require(_addr != suppliers[msg.sender].addr, "A supplier with this address already exists!");
         Supplier memory newSupplier = Supplier(_addr, _rating, new uint[](0));
         suppliers[_addr] = newSupplier;
+    }
+
+    // +
+    function shipProduct(uint _productId, uint _numberOfProducts) public {
+        require(products[_productId].id != 0, "The product doesn't exist!");
+        require(products[_productId].supplier == msg.sender, "You are not a supplier!");
+        products[_productId].numberOfProducts = products[_productId].numberOfProducts + _numberOfProducts;
+    }
+
+    // +
+    function sellProduct(uint _purchaseId, address _buyer, uint _productId, uint _numberOfProducts) public {
+        require(products[_productId].owner == msg.sender, "You are not the owner of the product!");
+        require(products[_productId].numberOfProducts - _numberOfProducts > 0, "The product is not enough!");
+        Purchase memory newPurchase = Purchase(_buyer, _productId, _numberOfProducts);
+        purchases[_purchaseId] = newPurchase;
+        products[_productId].numberOfProducts = products[_productId].count - _numberOfProducts;
+    }
+
+    // +
+    function returnProduct(uint _purchaseId) public {
+        require(purchases[_purchaseId].id != 0, "The purchase doesn't exist!");
+        require(purchases[_purchaseId].productId == _purchaseId, "You have not bought this product!");
+        products[purchases[_purchaseId].productId].numberOfProducts = products[purchases[_purchaseId].productId].numberOfProducts + purchases[_purchaseId].numberOfProducts;
+        delete purchases[_purchaseId];
     }
 
     function updateRole(address _addr, Roles _role) public {
