@@ -4,36 +4,53 @@
     <title>Store Interface</title>
     <link rel="shortcut icon" href="images/favicon.png" type="image/png" />
     <link href="css/style.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
-    <script type="module" src="js/scripts.js"></script>
+    <link href="js/scripts.js" type="module" />
   </head>
 
   <body>
     <div>
-      <h2>Create Product</h2>
-      <input id="productId" type="number" placeholder="Product ID" />
-      <input id="productName" type="text" placeholder="Product Name" />
-      <input id="productPrice" type="number" placeholder="Product Price" />
-      <button onclick="createProduct()">Create</button>
+      <form method="post">
+        <h2>Create Product</h2>
+        <input name="productId" type="number" placeholder="Product ID" />
+        <input name="productName" type="text" placeholder="Product Name" />
+        <input name="productPrice" type="number" placeholder="Product Price" />
+        <input type="submit" value="Create Product" />
+      </form>
 
-      <h2>Add Supplier</h2>
-      <input id="supplierAddress" type="text" placeholder="Supplier Address" />
-      <input id="supplierRating" type="number" placeholder="Supplier Rating" />
-      <button onclick="addSupplier()">Add Supplier</button>
+      <form method="post">
+        <h2>Add Supplier</h2>
+        <input
+          id="supplierAddress"
+          type="text"
+          placeholder="Supplier Address"
+        />
+        <input
+          id="supplierRating"
+          type="number"
+          placeholder="Supplier Rating"
+        />
+        <input type="submit" value="Add Supplier" />
+      </form>
 
-      <h2>Ship Product</h2>
-      <input id="shipProductId" type="number" placeholder="Product ID" />
-      <input id="shipStoreAddress" type="text" placeholder="Store Address" />
-      <button onclick="shipProduct()">Ship</button>
+      <form method="post">
+        <h2>Ship Product</h2>
+        <input id="shipProductId" type="number" placeholder="Product ID" />
+        <input id="shipStoreAddress" type="text" placeholder="Store Address" />
+        <input type="submit" value="Ship Product" />
+      </form>
 
-      <h2>Sell Product</h2>
-      <input id="sellProductId" type="number" placeholder="Product ID" />
-      <input id="sellBuyerAddress" type="text" placeholder="Buyer Address" />
-      <button onclick="sellProduct()">Sell</button>
+      <form method="post">
+        <h2>Sell Product</h2>
+        <input id="sellProductId" type="number" placeholder="Product ID" />
+        <input id="sellBuyerAddress" type="text" placeholder="Buyer Address" />
+        <input type="submit" value="Sell Product" />
+      </form>
 
-      <h2>Return Product</h2>
-      <input id="returnProductId" type="number" placeholder="Product ID" />
-      <button onclick="returnProduct()">Return</button>
+      <form method="post">
+        <h2>Return Product</h2>
+        <input id="returnProductId" type="number" placeholder="Product ID" />
+        <input type="submit" value="Return Product" />
+      </form>
     </div>
   </body>
 </html>

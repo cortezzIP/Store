@@ -1,51 +1,23 @@
-const http = require("http");
 const fs = require("fs");
-const path = require("path");
+const express = require("express");
+const scripts = require("./js/scripts");
 
-const server = http.createServer((req, res) => {
-  let filePath = "." + req.url;
-  if (filePath === "./") {
-    filePath = "./index.html"; // обслуживание главной страницы
-  }
+const app = express();
+const urlencodedParser = express.urlencoded({ extended: false });
 
-  let extname = String(path.extname(filePath)).toLowerCase();
-  let contentType = "text/html";
+app.use(express.static(__dirname + "/"));
 
-  const mimeTypes = {
-    ".html": "text/html",
-    ".js": "text/javascript",
-    ".css": "text/css",
-    ".json": "application/json",
-    ".png": "image/png",
-    ".jpg": "image/jpg",
-    ".gif": "image/gif",
-    ".svg": "image/svg+xml",
-    ".ico": "image/x-icon",
-  };
+app.post("/", urlencodedParser, function (request, response) {
+  if (!request.body) return response.sendStatus(400);
+  scripts.createProduct(
+    request.body.productId,
+    request.body.productName,
+    request.body.productPrice
+  );
 
-  contentType = mimeTypes[extname] || "application/octet-stream";
-
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      if (err.code == "ENOENT") {
-        fs.readFile("404.html", (err, content) => {
-          res.writeHead(200, { "Content-Type": contentType });
-          res.end(content, "utf-8");
-        });
-      } else {
-        res.writeHead(500);
-        res.end(
-          "Sorry, check with the site admin for error: " + err.code + " ..\n"
-        );
-        res.end();
-      }
-    } else {
-      res.writeHead(200, { "Content-Type": contentType });
-      res.end(content, "utf-8");
-    }
-  });
+  response.send("ok");
 });
 
-server.listen(7545, () => {
-  console.log("Server listening at port  7545");
+app.listen(7545, () => {
+  console.log("Сервер запущен... (port: 7545)");
 });

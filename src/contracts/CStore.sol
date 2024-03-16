@@ -26,7 +26,7 @@ contract CStore {
 
     struct Supplier {
         address addr;
-        uint rating;
+        int rating;
         uint[] productIds;
     }
 
@@ -60,16 +60,17 @@ contract CStore {
 
     // +
     function sellProduct(uint _purchaseId, address _buyer, uint _productId, uint _numberOfProducts) public {
-        require(products[_productId].owner == msg.sender, "You are not the owner of the product!");
+        require(products[_productId].id != 0, "There is no such product in the store!");
         require(products[_productId].numberOfProducts - _numberOfProducts > 0, "The product is not enough!");
         Purchase memory newPurchase = Purchase(_buyer, _productId, _numberOfProducts);
         purchases[_purchaseId] = newPurchase;
-        products[_productId].numberOfProducts = products[_productId].count - _numberOfProducts;
+        products[_productId].numberOfProducts = products[_productId].numberOfProducts - _numberOfProducts;
     }
 
     // +
     function returnProduct(uint _purchaseId) public {
-        require(purchases[_purchaseId].id != 0, "The purchase doesn't exist!");
+        require(purchases[_purchaseId].buyer != address(0), "The purchase doesn't exist");
+        require(purchases[_purchaseId].buyer == msg.sender, "The purchase was not made by you!");
         require(purchases[_purchaseId].productId == _purchaseId, "You have not bought this product!");
         products[purchases[_purchaseId].productId].numberOfProducts = products[purchases[_purchaseId].productId].numberOfProducts + purchases[_purchaseId].numberOfProducts;
         delete purchases[_purchaseId];

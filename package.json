@@ -2,9 +2,9 @@
   "name": "store",
   "version": "1.0.0",
   "description": "wassup",
-  "main": "js/index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node js/index.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/cortezzIP/Store#readme",
   "dependencies": {
     "express": "^4.18.3",
+    "nodemon": "^3.1.0",
     "web3": "^4.6.0"
   }
 }
